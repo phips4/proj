@@ -11,19 +11,20 @@ var showCmd = &cobra.Command{
 	Use:   "show <name or id>",
 	Short: "Show the details of a project",
 	Args:  cobra.ExactArgs(1),
-	Run:   runShowFunc(projectRepo),
+	RunE:  runShowFunc(projectRepo),
 }
 
-func runShowFunc(getter repo.ProjectGetter) func(cmd *cobra.Command, args []string) {
-	return func(cmd *cobra.Command, args []string) {
+func runShowFunc(getter repo.ProjectGetter) func(cmd *cobra.Command, args []string) error {
+	return func(cmd *cobra.Command, args []string) error {
 		idOrName := args[0]
 
 		proj, err := getter.Get(idOrName)
 		if err != nil {
-			log.Fatalln("Couldn't find project:", err)
-			return
+			return err
 		}
+
 		log.Printf("project: %s\n,  desc: %s\n,  path: %s\n,  exec %s\n", proj.Name, proj.Description, proj.Path, proj.Execute)
+		return nil
 	}
 }
 

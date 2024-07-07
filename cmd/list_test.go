@@ -24,7 +24,7 @@ func (getter *mockedAllGetter) All() ([]*model.Project, error) {
 func Test_runListFunc(t *testing.T) {
 	getter := &mockedAllGetter{}
 	cmd := &cobra.Command{
-		Run: runListFunc(getter),
+		RunE: runListFunc(getter),
 	}
 
 	err := cmd.Execute()
@@ -36,7 +36,7 @@ func Test_runListFunc(t *testing.T) {
 func Test_runListFunc_empty_args(t *testing.T) {
 	getter := &mockedAllGetter{}
 	cmd := &cobra.Command{
-		Run:  runListFunc(getter),
+		RunE: runListFunc(getter),
 		Args: cobra.ExactArgs(0),
 	}
 

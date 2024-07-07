@@ -25,7 +25,7 @@ func (l *mockedLabelManager) RemoveLabel(idOrName, label string) error {
 func Test_runAddLabelFunc(t *testing.T) {
 	label := &mockedLabelManager{}
 	cmd := &cobra.Command{
-		Run:  runAddLabelFunc(label),
+		RunE: runAddLabelFunc(label),
 		Args: cobra.ExactArgs(2),
 	}
 
@@ -43,7 +43,7 @@ func Test_runAddLabelFunc(t *testing.T) {
 func Test_runRemoveLabel(t *testing.T) {
 	label := &mockedLabelManager{}
 	cmd := &cobra.Command{
-		Run:  runRemoveLabelFunc(label),
+		RunE: runRemoveLabelFunc(label),
 		Args: cobra.ExactArgs(2),
 	}
 

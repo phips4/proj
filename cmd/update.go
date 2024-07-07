@@ -16,15 +16,15 @@ var updateCmd = &cobra.Command{
 	Use:   "update <name or id>",
 	Short: "Update project fields",
 	Args:  cobra.ExactArgs(1),
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		idOrName := args[0]
 
 		if updatePath != "" {
 			if err := projectRepo.UpdatePath(idOrName, updatePath); err != nil {
-				log.Fatalln("Update Error:", err)
-				return
+				return err
 			}
 			log.Printf("Project %s path updated to %s\n", idOrName, updatePath)
+			return nil
 		}
 
 		if updateExec != "" {
@@ -34,16 +34,18 @@ var updateCmd = &cobra.Command{
 			//	return
 			//}
 			log.Printf("Project %s execute command updated to %s\n", idOrName, updateExec)
+			return nil
 		}
 
 		if updateDesc != "" {
 			if err := projectRepo.UpdateDescription(idOrName, updateDesc); err != nil {
-				log.Fatalln("Update Error:", err)
-				return
+				return err
 			}
 			log.Printf("Project %s description updated to %s\n", idOrName, updateDesc)
+			return nil
 		}
 
+		return nil
 	},
 }
 

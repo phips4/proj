@@ -19,7 +19,7 @@ func (deleter *mockedDeleter) Delete(idOrName string) error {
 func Test_runDeleteFunc(t *testing.T) {
 	mockedDeleter := &mockedDeleter{}
 	cmd := &cobra.Command{
-		Run: runDeleteFunc(mockedDeleter),
+		RunE: runDeleteFunc(mockedDeleter),
 	}
 
 	oldArgs := os.Args
@@ -35,7 +35,7 @@ func Test_runDeleteFunc(t *testing.T) {
 func Test_runDeleteFunc_empty_args(t *testing.T) {
 	mockedDeleter := &mockedDeleter{}
 	cmd := &cobra.Command{
-		Run:  runDeleteFunc(mockedDeleter),
+		RunE: runDeleteFunc(mockedDeleter),
 		Args: cobra.ExactArgs(1),
 	}
 

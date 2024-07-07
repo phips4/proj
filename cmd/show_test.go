@@ -10,7 +10,7 @@ import (
 func Test_runShowFunc(t *testing.T) {
 	getter := &mockedGetter{}
 	cmd := &cobra.Command{
-		Run:  runShowFunc(getter),
+		RunE: runShowFunc(getter),
 		Args: cobra.ExactArgs(1),
 	}
 

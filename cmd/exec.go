@@ -12,29 +12,30 @@ var execCmd = &cobra.Command{
 	Use:   "exec <name or id>",
 	Short: "Execute the command of a project",
 	Args:  cobra.ExactArgs(1),
-	Run:   runExecFunc(projectRepo),
+	RunE:  runExecFunc(projectRepo),
 }
 
-func runExecFunc(getter repo.ProjectGetter) func(cmd *cobra.Command, args []string) {
-	return func(cmd *cobra.Command, args []string) {
+func runExecFunc(getter repo.ProjectGetter) func(cmd *cobra.Command, args []string) error {
+	return func(cmd *cobra.Command, args []string) error {
 		idOrName := args[0]
 
 		proj, err := getter.Get(idOrName)
 		if err != nil {
-			log.Fatalln("Couldn't find project:", err)
+			return err
 		}
 
 		cmdExec := exec.Command(proj.Execute)
-		if proj.Execute != "" {
-			out, err := cmdExec.CombinedOutput()
-			if err != nil {
-				log.Fatalln("Error executing:", err)
-				return
-			}
-			log.Println(string(out))
-		} else {
-			log.Println("do command in project:", proj.Name)
+		if proj.Execute == "" {
+			log.Println("proj.Execute is empty, ignoring execution of", proj.Name)
+			return nil
 		}
+
+		out, err := cmdExec.CombinedOutput()
+		if err != nil {
+			return err
+		}
+		log.Println(string(out))
+		return nil
 	}
 }
 

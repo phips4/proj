@@ -19,7 +19,7 @@ func (adder *mockedAdder) Add(name string, description string, path string, exec
 func Test_runFunc(t *testing.T) {
 	adder := &mockedAdder{}
 	cmd := &cobra.Command{
-		Run: runAddFunc(adder),
+		RunE: runAddFunc(adder),
 	}
 
 	oldArgs := os.Args
@@ -35,7 +35,7 @@ func Test_runFunc(t *testing.T) {
 func Test_runFunc_empty_args(t *testing.T) {
 	adder := &mockedAdder{}
 	cmd := &cobra.Command{
-		Run:  runAddFunc(adder),
+		RunE: runAddFunc(adder),
 		Args: cobra.ExactArgs(2),
 	}
 

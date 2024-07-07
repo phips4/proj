@@ -16,21 +16,21 @@ var addLabelCmd = &cobra.Command{
 	Use:   "add <name or id> <label>",
 	Short: "Add a label to a project",
 	Args:  cobra.ExactArgs(2),
-	Run:   runAddLabelFunc(projectRepo),
+	RunE:  runAddLabelFunc(projectRepo),
 }
 
-func runAddLabelFunc(plu repo.ProjectLabelManager) func(cmd *cobra.Command, args []string) {
-	return func(cmd *cobra.Command, args []string) {
+func runAddLabelFunc(plu repo.ProjectLabelManager) func(cmd *cobra.Command, args []string) error {
+	return func(cmd *cobra.Command, args []string) error {
 		idOrName := args[0]
 		label := args[1]
 
 		err := plu.AddLabel(idOrName, label)
 		if err != nil {
-			log.Fatalln("Error adding label:", err)
-			return
+			return err
 		}
 
 		log.Printf("Label added to project %s\n", idOrName)
+		return nil
 	}
 }
 
@@ -38,20 +38,21 @@ var removeLabelCmd = &cobra.Command{
 	Use:   "remove <name or id> <label>",
 	Short: "Remove a label from a project",
 	Args:  cobra.ExactArgs(2),
-	Run:   runRemoveLabelFunc(projectRepo),
+	RunE:  runRemoveLabelFunc(projectRepo),
 }
 
-func runRemoveLabelFunc(plu repo.ProjectLabelManager) func(cmd *cobra.Command, args []string) {
-	return func(cmd *cobra.Command, args []string) {
+func runRemoveLabelFunc(plu repo.ProjectLabelManager) func(cmd *cobra.Command, args []string) error {
+	return func(cmd *cobra.Command, args []string) error {
 		idOrName := args[0]
 		label := args[1]
 
 		if err := plu.RemoveLabel(idOrName, label); err != nil {
 			log.Fatalln("Error removing label:", err)
-			return
+			return err
 		}
 
 		log.Printf("Label removed from project %s\n", idOrName)
+		return nil
 	}
 }
 

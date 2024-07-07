@@ -14,7 +14,7 @@ type mockedGetter struct {
 
 func (getter *mockedGetter) Get(idOrName string) (*model.Project, error) {
 	getter.executed = true
-	return &model.Project{Name: "mockedProject"}, nil
+	return &model.Project{Name: "mockedProject", Execute: ""}, nil
 }
 
 func (getter *mockedGetter) All() ([]*model.Project, error) {
@@ -24,7 +24,7 @@ func (getter *mockedGetter) All() ([]*model.Project, error) {
 func Test_runExecFunc(t *testing.T) {
 	getter := &mockedGetter{}
 	cmd := &cobra.Command{
-		Run: runExecFunc(getter),
+		RunE: runExecFunc(getter),
 	}
 
 	oldArgs := os.Args
