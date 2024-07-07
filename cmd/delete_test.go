@@ -36,7 +36,7 @@ func Test_runDeleteFunc_empty_args(t *testing.T) {
 	mockedDeleter := &mockedDeleter{}
 	cmd := &cobra.Command{
 		Run:  runDeleteFunc(mockedDeleter),
-		Args: cobra.MinimumNArgs(1),
+		Args: cobra.ExactArgs(1),
 	}
 
 	oldArgs := os.Args

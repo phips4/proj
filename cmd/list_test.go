@@ -37,7 +37,7 @@ func Test_runListFunc_empty_args(t *testing.T) {
 	getter := &mockedAllGetter{}
 	cmd := &cobra.Command{
 		Run:  runListFunc(getter),
-		Args: cobra.MaximumNArgs(0),
+		Args: cobra.ExactArgs(0),
 	}
 
 	oldArgs := os.Args

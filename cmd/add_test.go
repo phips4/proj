@@ -36,7 +36,7 @@ func Test_runFunc_empty_args(t *testing.T) {
 	adder := &mockedAdder{}
 	cmd := &cobra.Command{
 		Run:  runAddFunc(adder),
-		Args: cobra.MinimumNArgs(2),
+		Args: cobra.ExactArgs(2),
 	}
 
 	oldArgs := os.Args

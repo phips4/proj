@@ -11,7 +11,7 @@ func Test_runShowFunc(t *testing.T) {
 	getter := &mockedGetter{}
 	cmd := &cobra.Command{
 		Run:  runShowFunc(getter),
-		Args: cobra.MaximumNArgs(1),
+		Args: cobra.ExactArgs(1),
 	}
 
 	oldArgs := os.Args

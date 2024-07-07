@@ -26,7 +26,7 @@ func Test_runAddLabelFunc(t *testing.T) {
 	label := &mockedLabelManager{}
 	cmd := &cobra.Command{
 		Run:  runAddLabelFunc(label),
-		Args: cobra.MaximumNArgs(2),
+		Args: cobra.ExactArgs(2),
 	}
 
 	oldArgs := os.Args
@@ -44,7 +44,7 @@ func Test_runRemoveLabel(t *testing.T) {
 	label := &mockedLabelManager{}
 	cmd := &cobra.Command{
 		Run:  runRemoveLabelFunc(label),
-		Args: cobra.MaximumNArgs(2),
+		Args: cobra.ExactArgs(2),
 	}
 
 	oldArgs := os.Args
