@@ -14,7 +14,7 @@ var (
 var addCmd = &cobra.Command{
 	Use:   "add <name> <description>",
 	Short: "Add a new project",
-	Args:  cobra.ExactArgs(2),
+	Args:  cobra.MinimumNArgs(2),
 	RunE:  runAddFunc(projectRepo),
 }
 
